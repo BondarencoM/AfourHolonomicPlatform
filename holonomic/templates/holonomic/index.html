@@ -1,0 +1,36 @@
+{% extends "holonomic/base.html" %}
+
+{% load static %}
+
+{% block content %}
+<button class="btn btn-outline-primary">
+    10m line
+</button>
+
+<button class="btn btn-outline-primary">
+    1m square
+</button>
+
+<div class="row">
+    <div class="col-6">
+        <div class="position-relative">
+            <div id="static"></div>
+        </div>
+    </div>
+</div>
+<script>
+    var static = window.nipplejs.create({
+        zone: document.getElementById('static'),
+        mode: 'static',
+        position: { top: '100px' },
+        color: 'red'
+    });
+
+    static.on('move', (event, pos) => {
+        console.log({
+            distance: pos.distance,
+            angle: pos.angle.degree,
+        })
+    })
+</script>
+{% endblock %}

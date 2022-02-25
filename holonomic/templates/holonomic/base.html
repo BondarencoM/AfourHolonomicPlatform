@@ -1,0 +1,18 @@
+{% load bootstrap5 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{% load static %}
+
+<html>
+    {% bootstrap_messages %}
+    <script src="{% static 'nipplejs.js' %}"> </script>
+
+    <div class="container mt-3" id="content">
+        {% block content %}{% endblock %}
+    </div>
+
+
+</html>
