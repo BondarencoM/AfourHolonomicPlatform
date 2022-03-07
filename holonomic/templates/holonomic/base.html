@@ -9,7 +9,11 @@
 <html>
     {% bootstrap_messages %}
     <script src="{% static 'nipplejs.js' %}"> </script>
-
+    <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Holonomic Platform</a>
+        </div>
+    </nav>
     <div class="container mt-3" id="content">
         {% block content %}{% endblock %}
     </div>

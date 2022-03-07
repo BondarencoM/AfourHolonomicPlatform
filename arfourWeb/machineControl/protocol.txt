@@ -1,0 +1,26 @@
+Each command from the controller to the platform has the following form:
+(CommandId)(Argument 0)[(Argument n)]
+Each block e.g. "(CommandId)" is exactly one byte long and interpreted as a an unsigned integer (0-255).
+
+The following Commands are defined:
+    CommandId:1
+        Name: Precision Move
+        Description: Execute a move for a precise distance.
+        Arguments:
+            Angle: The angle of moving, mapped to the 0-255 interval [1]
+            Distance: Takes up 2 bytes (0-65535), the distance in centimeters to be traveled. 
+            Speed: The movement speed mapped unto the 0-255 interval [2].
+        Response: 1 for success, 0 for failure (unsigned byte)
+    CommandId:2
+        Name: Arbitrary Move
+        Description: Start moving in the given direction and contrinue untill a different command is received.
+        Arguments:
+        Angle: The angle of movement, mapped to the 0-255 inteval [1].
+            Speed: The movement speed mapped unto the 0-255 interval [2].
+        Response: Nonte
+    CommandId:3
+        Name: Spin
+        Description: Turn in place.
+        Arguments:
+            Angle: The angle between the orientation at start-up and the desired orientation, mapped to the 0-255 inteval [1]. 
+        Response: 1 for success, 0 for failure (unsigned byte)
