@@ -19,3 +19,11 @@ def arbitraryMove(request: WSGIRequest):
     return JsonResponse({
         'status': 'OK'
     })
+
+@csrf_exempt
+def presetMove(request: WSGIRequest):
+    data = json.loads(request.body)
+    machine.presetMove(data['moveId'])
+    return JsonResponse({
+        'status': 'OK'
+    })

@@ -13,7 +13,7 @@
     <div class="col-6 row">
         <h3>Command</h3>
 
-        <button class="btn btn-outline-primary">
+        <button class="btn btn-outline-primary" onclick="OnTenMeterLineClick()">
             Go forward 10 meters
         </button>
 
@@ -34,15 +34,33 @@
         size: 200,
     });
 
-    static.on('move', async (event, pos) => {
-        const resp = await fetch('arbitraryMove', {
-            method: 'POST',
-            body: JSON.stringify({
-                angle: pos.angle.degree,
-                speed: pos.distance,
+    setInterval(async () => {
+        if (this.joystickControl){
+            const resp = await fetch('arbitraryMove', {
+                method: 'POST',
+                body: JSON.stringify({
+                    angle: window.joystickPosition.angle.degree,
+                    speed: window.joystickPosition.distance,
+                })
             })
-        })
-        console.log(await resp.json())
+            cons    
+        }
+    }, 200)
+
+    static.on('move', (event, pos) => {
+        window.joystickControl = true
+        window.joystickPosition = pos
     })
+
+    window.OnTenMeterLineClick = async () => {
+        window.joystickControl = false
+        const resp = await fetch('presetMove', {
+                method: 'POST',
+                body: JSON.stringify({
+                    moveId: 1
+                })
+            })
+            console.log(await resp.json())
+    }
 </script>
 {% endblock %}
