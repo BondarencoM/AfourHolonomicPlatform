@@ -17,10 +17,10 @@
             Go forward 10 meters
         </button>
 
-        <button class="btn btn-outline-primary">
+        <button class="btn btn-outline-primary" onclick="SquareMoveClick()">
             Make a 1 meter square
         </button>
-        <button class="btn btn-outline-danger">
+        <button class="btn btn-outline-danger" onclick="StopMoving()">
             Stop
         </button>
     </div>
@@ -59,6 +59,25 @@
                 body: JSON.stringify({
                     moveId: 1
                 })
+            })
+            console.log(await resp.json())
+    }
+
+    window.SquareMoveClick = async () => {
+        window.joystickControl = false
+        const resp = await fetch('presetMove', {
+                method: 'POST',
+                body: JSON.stringify({
+                    moveId: 2
+                })
+            })
+            console.log(await resp.json())
+    }
+
+    window.StopMoving = async () => {
+        window.joystickControl = false
+        const resp = await fetch('stopMoving', {
+                method: 'POST'
             })
             console.log(await resp.json())
     }

@@ -1,8 +1,20 @@
-from arfourWeb.machineControl.Protocol import ArbitraryMove
+from yaml import serialize
+from arfourWeb.machineControl.Protocol import ArbitraryMove, OneMeterMove, StopCommand, TenMeterMove
 import serial
 import time
-# serCom = serial.Serial("/dev/ttyS0", 9600)
-serCom = type('obj', (object,), {'write' : lambda x: 1})
+serCom = serial.Serial("COM11", 9600)
+# serCom = type('obj', (object,), {'write' : lambda x: 1, 'readline': lambda x: 1})
+
+def mapToByte(value, rangeStart, rangeEnd):
+    return round(255 / (rangeEnd - rangeStart) * (value - rangeStart))
+
+
+def SquareMove(direction):
+    return OneMeterMove(
+                angle=mapToByte(direction, 0, 359),
+                speed=mapToByte(50, 0, 100),
+                distance=0,
+            )
 
 
 class MachineControl:
@@ -17,20 +29,28 @@ class MachineControl:
         print([x for x in val])
         serCom.write(val)
         time.sleep(1)
-        print(serCom.readline())
 
     def presetMove(self, id):
-        if id == 1 :
-            val = ArbitraryMove(
+        if id == 1:
+            val = TenMeterMove(
                 angle=mapToByte(0, 0, 359),
-                speed=mapToByte(35, 0, 100),
-                distance=465,
+                speed=mapToByte(50, 0, 100),
+                distance=0,
             )
             print([x for x in val])
             serCom.write(val)
-            time.sleep()
-            print(serCom.readline())
+        elif id == 2:
+            serCom.write(SquareMove(0))
+            time.sleep(2)
 
+            serCom.write(SquareMove(90))
+            time.sleep(2)
 
-def mapToByte(value, rangeStart, rangeEnd):
-    return round(255 / (rangeEnd - rangeStart) * (value - rangeStart))
+            serCom.write(SquareMove(180))
+            time.sleep(2)
+
+            serCom.write(SquareMove(270))
+            time.sleep(2)
+    
+    def stop(self):
+        serCom.write(StopCommand())

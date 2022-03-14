@@ -27,3 +27,11 @@ def presetMove(request: WSGIRequest):
     return JsonResponse({
         'status': 'OK'
     })
+
+
+@csrf_exempt
+def stopMoving(whatever):
+    machine.stop()
+    return JsonResponse({
+        'status': 'OK'
+    })

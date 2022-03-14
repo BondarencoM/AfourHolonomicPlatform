@@ -7,5 +7,6 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('arbitraryMove', views.arbitraryMove, name='index', ),
     path('presetMove', views.presetMove, name='index', ),
+    path('stopMoving', views.stopMoving, name='index', ),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     
